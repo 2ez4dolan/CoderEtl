@@ -1,0 +1,3 @@
+APY_KEY = "da172fafe18d867d54ab55818873b798"
+
+APY_KEYW= "uOPGYonQjydN1qdnRzssLnObYV6M8QWf"
