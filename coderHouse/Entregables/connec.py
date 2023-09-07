@@ -10,9 +10,10 @@ conn= psycopg2.connect(
 ) 
 conn.autocommit=True
 
-cur= conn.cursor() 
-query= "CREATE TABLE IF NOT EXISTS Clima (clima_id int PRIMARY KEY ,nombre varchar(255),pais varchar(255),descripcion varchar(255),temp decimal(2,2),feels_like decimal(2,2),temp_max decimal(2,2), temp_min decimal(2,2),humedad decimal(3),fecha_solicitud date) "
-cur.execute(query)
 
-
-conn.close()
+def crear_tabla():
+    cur= conn.cursor() 
+    query= "CREATE TABLE IF NOT EXISTS Clima (clima_id int PRIMARY KEY ,nombre varchar(255),pais varchar(255),descripcion varchar(255),temp decimal(2,2),feels_like decimal(2,2),temp_max decimal(2,2), temp_min decimal(2,2),humedad decimal(3),fecha_solicitud date) "
+    cur.execute(query)
+    print("tabla creada")
+    conn.close()

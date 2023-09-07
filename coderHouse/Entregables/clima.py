@@ -1,5 +1,6 @@
 import requests
 import apikey
+import connec
 
 
 ciudades=["Tandil","Moron","Merlo","Ituzaingo","Gonzalez Catan","Bariloche","Necochea","Belgrano","La plata","Mar del Plata"]
@@ -28,6 +29,6 @@ for ciudad in ciudades:
 
     print(f"id: {id} nombre: {nombre} pais: {pais} descripcion: {descripcion} temp actual: {temp} temp max: {temp_max} temp min: {temp_min} se sienten unos: {feels_like} humedad: {humedad}\n")
 
-
+connec.crear_tabla()
 
 
