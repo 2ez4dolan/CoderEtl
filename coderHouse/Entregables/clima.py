@@ -1,15 +1,14 @@
 import requests
-import apikey
+import os 
 import connec
 
 
 ciudades=["Tandil","Moron","Merlo","Ituzaingo","Gonzalez Catan","Bariloche","Necochea","Belgrano","La plata","Mar del Plata"]
-
+api_key = os.environ.get("APY_KEY")
+lenguaje= "es"
 
 for ciudad in ciudades:
     base_url= "https://api.openweathermap.org/data/2.5/weather?"
-    api_key = apikey.APY_KEY
-    lenguaje= "es"
     url = base_url+"appid="+api_key+"&q="+ciudad+"&lang="+lenguaje
 
     r=requests.get(url,timeout=10)
