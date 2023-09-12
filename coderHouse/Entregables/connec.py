@@ -13,7 +13,21 @@ conn.autocommit=True
 
 def crear_tabla():
     cur= conn.cursor() 
-    query= "CREATE TABLE IF NOT EXISTS Clima (clima_id int PRIMARY KEY ,nombre varchar(255),pais varchar(255),descripcion varchar(255),temp decimal(2,2),feels_like decimal(2,2),temp_max decimal(2,2), temp_min decimal(2,2),humedad decimal(3),fecha_solicitud date) "
+    query= "CREATE TABLE IF NOT EXISTS Clima (clima_id int PRIMARY KEY ,nombre varchar(255),pais varchar(255),descripcion varchar(255),temp decimal(5,2),feels_like decimal(5,2),temp_max decimal(5,2), temp_min decimal(5,2),humedad decimal(5),fecha_solicitud date) "
     cur.execute(query)
     print("tabla creada")
-    conn.close()
+
+def insertar(id,nombre,pais,descripcion,temp,sensacion,temp_max,temp_min,humedad,fecha_actual):
+    
+        cur=conn.cursor()
+        query_consulta= f"select clima_id from Clima where nombre ='{nombre}' and fecha_solicitud='{fecha_actual}'"
+        cur.execute(query_consulta)
+        valor_existente = cur.fetchone()
+
+        if  valor_existente:
+                print("Ya existe el registro en la base")
+        else :
+                insert = f"INSERT INTO Clima(clima_id, nombre, pais, descripcion, temp, feels_like, temp_max, temp_min, humedad,fecha_solicitud)VALUES ({id}, '{nombre}', '{pais}', '{descripcion}', {temp}, {sensacion}, {temp_max}, {temp_min}, {humedad},'{fecha_actual}')"
+                cur.execute(insert)
+                print("inserccion realizada")
+    
