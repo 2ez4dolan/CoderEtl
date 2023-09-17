@@ -13,7 +13,7 @@ conn.autocommit=True
 
 def crear_tabla():
     cur= conn.cursor() 
-    query= "CREATE TABLE IF NOT EXISTS Clima (clima_id int PRIMARY KEY ,nombre varchar(255),pais varchar(255),descripcion varchar(255),temp decimal(5,2),feels_like decimal(5,2),temp_max decimal(5,2), temp_min decimal(5,2),humedad decimal(5),fecha_solicitud date) "
+    query= "CREATE TABLE IF NOT EXISTS Clima (clima_id int ,nombre varchar(255),pais varchar(255),descripcion varchar(255),temp decimal(5,2),feels_like decimal(5,2),temp_max decimal(5,2), temp_min decimal(5,2),humedad decimal(5),fecha_solicitud date, PRIMARY KEY (clima_id, nombre, fecha_solicitud))"
     cur.execute(query)
     print("tabla creada")
 
@@ -31,3 +31,7 @@ def insertar(id,nombre,pais,descripcion,temp,sensacion,temp_max,temp_min,humedad
                 cur.execute(insert)
                 print("inserccion realizada")
     
+
+def cerrar():
+  conn.close()
+  print("conexion cerrada")

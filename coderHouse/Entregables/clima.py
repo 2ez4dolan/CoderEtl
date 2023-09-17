@@ -21,10 +21,23 @@ for ciudad in ciudades:
 
 df = pd.DataFrame(response)
 
-
+df= df.drop_duplicates()
 connec.crear_tabla()
 
+def grados_celcius(kelvin):
 
+    return kelvin - 273.15
+
+
+
+
+df.loc[:,["temp","temp_max","temp_min"]] = df.loc[:,["temp","temp_max","temp_min"]].applymap(grados_celcius).round(0)
+
+df["sensacion_termica"] = df["feels_like"].apply(grados_celcius).round(0)
+
+
+
+print (df)
 for index,row in df.iterrows():
     connec.insertar(
         id = row['id'],
@@ -32,9 +45,11 @@ for index,row in df.iterrows():
         pais = row['pais'],
         descripcion= row['descripcion'],
         temp= row['temp'],
-        sensacion = row['feels_like'],
+        sensacion = row['sensacion_termica'],
         temp_max = row['temp_max'],
         temp_min = row['temp_min'],
         humedad = row['humedad'],
         fecha_actual=row['fecha_solicitud']
         )
+
+connec.cerrar()
