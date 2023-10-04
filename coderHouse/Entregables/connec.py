@@ -19,19 +19,18 @@ def crear_tabla():
 
 def insertar(id,nombre,pais,descripcion,temp,sensacion,temp_max,temp_min,humedad,fecha_actual):
     
-        cur=conn.cursor()
-        query_consulta= f"select clima_id from Clima where nombre ='{nombre}' and fecha_solicitud='{fecha_actual}'"
-        cur.execute(query_consulta)
-        valor_existente = cur.fetchone()
-
-        if  valor_existente:
-                print("Ya existe el registro en la base")
-        else :
-                insert = f"INSERT INTO Clima(clima_id, nombre, pais, descripcion, temp, feels_like, temp_max, temp_min, humedad,fecha_solicitud)VALUES ({id}, '{nombre}', '{pais}', '{descripcion}', {temp}, {sensacion}, {temp_max}, {temp_min}, {humedad},'{fecha_actual}')"
-                cur.execute(insert)
-                print("inserccion realizada")
+    cur=conn.cursor()
+    query_consulta= f"select clima_id from Clima where nombre ='{nombre}' and fecha_solicitud='{fecha_actual}'"
+    cur.execute(query_consulta)
+    valor_existente = cur.fetchone()    
+    if  valor_existente:
+        print("Ya existe el registro en la base")
+    else :
+        insert = f"INSERT INTO Clima(clima_id, nombre, pais, descripcion, temp, feels_like, temp_max, temp_min, humedad,fecha_solicitud)VALUES ({id}, '{nombre}', '{pais}', '{descripcion}', {temp}, {sensacion}, {temp_max}, {temp_min}, {humedad},'{fecha_actual}')"
+        cur.execute(insert)
+        print("inserccion realizada")
     
 
 def cerrar():
-  conn.close()
-  print("conexion cerrada")
+    conn.close()
+    print("conexion cerrada")
