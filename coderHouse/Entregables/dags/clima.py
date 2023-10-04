@@ -57,7 +57,7 @@ def insert_data(df):
 
 
 default_args={
-    'owner': 'DavidBU',
+    'owner': 'Airflow',
     'retries':5,
     'retry_delay': timedelta(minutes=3)
 }
