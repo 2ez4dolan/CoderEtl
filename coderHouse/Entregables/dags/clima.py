@@ -8,9 +8,13 @@ from airflow.operators.python import PythonOperator
 
 
 
+
 def extract_api():
+    carpeta_actual = os.path.dirname(__file__)
+    carpeta_output = os.path.join(carpeta_actual,'..','output')
     ciudades=["Tandil","Moron","Merlo","Ituzaingo","Gonzalez Catan","Bariloche","Necochea","Belgrano","La plata","Mar del Plata"]
-    api_key = os.environ.get("APY_KEY")
+    #api_key = os.environ.get("APY_KEY")
+    api_key = "da172fafe18d867d54ab55818873b798"
     lenguaje= "es"
     response=[]
     fecha_actual= datetime.today()
@@ -24,22 +28,35 @@ def extract_api():
         response.append({"id":r['id'] ,"nombre":r['name'],"pais":r['sys']['country'],"descripcion":r['weather'][0]['description'],"temp": r['main']['temp'],"feels_like" : r['main']['feels_like'],"temp_max": r['main']['temp_max'],"temp_min" : r['main']['temp_min'], "humedad" : r['main']['humidity'],"fecha_solicitud":fecha_actual})
         df= pd.DataFrame(response)
     print(df)
-    return  df 
+    file_output = os.path.join(carpeta_output, f'extraccion_{fecha_actual}.csv')
+    df.to_csv(file_output, index=False)
+
+
 
 def grados_celcius(kelvin):
 
     return kelvin - 273.15
 
-def transform_data(df):
+def transform_data():
+    fecha_actual= datetime.today()
+    carpeta_output = os.path.join(os.path.dirname(__file__),'..','output')
+    file_output = os.path.join(carpeta_output, f'extraccion_{fecha_actual}.csv')
+    df = pd.read_csv(file_output)
     df= df.drop_duplicates()
     connec.crear_tabla()
     df.loc[:,["temp","temp_max","temp_min"]] = df.loc[:,["temp","temp_max","temp_min"]].applymap(grados_celcius).round(0)
     df["sensacion_termica"]=df["feels_like"].apply(grados_celcius).round(0)
     print(df)
-    return df
+    file_transform= os.path.join(carpeta_output, f'cargar_{fecha_actual}.csv')
+    df.to_csv(file_transform, index=False)
 
 
-def insert_data(df):
+def insert_data():
+    fecha_actual= datetime.today()
+    carpeta_output = os.path.join(os.path.dirname(__file__),'..','output')
+    file_transform= os.path.join(carpeta_output, f'cargar_{fecha_actual}.csv')
+    df = pd.read_csv(file_transform)
+
     for index,row in df.iterrows():
         connec.insertar(
             id = row['id'],
