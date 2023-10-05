@@ -28,7 +28,7 @@ def extract_api():
         response.append({"id":r['id'] ,"nombre":r['name'],"pais":r['sys']['country'],"descripcion":r['weather'][0]['description'],"temp": r['main']['temp'],"feels_like" : r['main']['feels_like'],"temp_max": r['main']['temp_max'],"temp_min" : r['main']['temp_min'], "humedad" : r['main']['humidity'],"fecha_solicitud":fecha_actual})
         df= pd.DataFrame(response)
     print(df)
-    file_output = os.path.join(carpeta_output, f'extraccion_{fecha_actual}.csv')
+    file_output = os.path.join(carpeta_output, f'extraccion_{fecha_actual.strftime("%Y%m%d")}.csv')
     df.to_csv(file_output, index=False)
 
 
@@ -38,7 +38,7 @@ def grados_celcius(kelvin):
     return kelvin - 273.15
 
 def transform_data():
-    fecha_actual= datetime.today()
+    fecha_actual= datetime.today().strftime("%Y%m%d")
     carpeta_output = os.path.join(os.path.dirname(__file__),'..','output')
     file_output = os.path.join(carpeta_output, f'extraccion_{fecha_actual}.csv')
     df = pd.read_csv(file_output)
@@ -52,7 +52,7 @@ def transform_data():
 
 
 def insert_data():
-    fecha_actual= datetime.today()
+    fecha_actual= datetime.today().strftime("%Y%m%d")
     carpeta_output = os.path.join(os.path.dirname(__file__),'..','output')
     file_transform= os.path.join(carpeta_output, f'cargar_{fecha_actual}.csv')
     df = pd.read_csv(file_transform)
