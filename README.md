@@ -9,6 +9,10 @@ Estructura del Proyecto
 
 dags/: Contiene los archivos DAG de Apache Airflow.
 
+output/: Contiene los archivos con los cuales se trabaja. 
+
+imagenes/: Contiene las imagenes de las pruebas de emails.
+
 config/: Contiene archivos de configuración, como airflow.cfg.
 
 Instrucciones de Uso
