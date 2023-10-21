@@ -3,6 +3,9 @@ import os
 import connec
 import pandas as pd 
 from datetime import datetime, timedelta
+from airflow.models import Variable
+
+
 
 
 ciudades=["Tandil","Moron","Merlo","Ituzaingo","Gonzalez Catan","Bariloche","Necochea","Belgrano","La plata","Mar del Plata"]
@@ -22,7 +25,7 @@ def directorios():
 def extract_api():
     
     #api_key = os.environ.get("APY_KEY")
-    api_key = "da172fafe18d867d54ab55818873b798"
+    api_key = Variable.get("SECRET_API_KEY")
     lenguaje= "es"
     response=[]
     fecha_actual= datetime.today()
