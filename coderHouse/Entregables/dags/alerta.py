@@ -9,8 +9,7 @@ from airflow.configuration import conf
 smtp_user = conf.get('smtp', 'smtp_user')
 smtp_password = conf.get('smtp', 'smtp_password')
 
-print(smtp_password)
-print(smtp_user)
+
 #Genero funcion para la poder elegir que ciudades quiero recibir o no las alertas
 def opciones_alerta(df):
     opciones_alerta = {ciudad: True for ciudad in df['nombre']}
@@ -34,7 +33,7 @@ def alertaMinima():
         ciudad = fila['nombre']
         temperatura = fila['temp_min']
 
-        if temperatura == 45 and ciudades.get(ciudad, False):
+        if temperatura <= 1 and ciudades.get(ciudad, False):
             try:
                 x=smtplib.SMTP('smtp.gmail.com',587)
                 x.starttls()
@@ -61,14 +60,14 @@ def alertaMaxima():
     
     for index, fila in df_min.iterrows():
         ciudad = fila['nombre']
-        temperatura = fila['temp_min']
+        temperatura = fila['temp_max']
 
-        if temperatura == 0 and ciudades.get(ciudad, False):
+        if temperatura >= 40 and ciudades.get(ciudad, False):
             try:
                 x=smtplib.SMTP('smtp.gmail.com',587)
                 x.starttls()
                 x.login(smtp_user,smtp_password)
-                subject='Alerta de temperaturas Bajas'
+                subject='Alerta de Alta temperatura'
                 body_text=f'Atencion : posibles temperaturas muy altas  en su area , temp :{temperatura} ,  hidratarse y mantenerse bajo sombra'
                 message='Subject: {}\n\n{}'.format(subject,body_text)
                 x.sendmail(smtp_user,'dolangp1@gmail.com',message)
@@ -77,4 +76,4 @@ def alertaMaxima():
                 print(exception)
                 print('Failure')
         else :
-            print(f"no hay alerta , temp_min = {temperatura}, ciudad:{ciudad}")
+            print(f"no hay alerta , temp_max = {temperatura}, ciudad:{ciudad}")

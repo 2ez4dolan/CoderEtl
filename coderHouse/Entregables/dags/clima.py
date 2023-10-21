@@ -21,7 +21,8 @@ def directorios():
 #EXTRAIGO INFORMACION DE LA API Y LA GUARDO EN UN ARCHIVO CSV
 def extract_api():
     
-    api_key = os.environ.get("APY_KEY")
+    #api_key = os.environ.get("APY_KEY")
+    api_key = "da172fafe18d867d54ab55818873b798"
     lenguaje= "es"
     response=[]
     fecha_actual= datetime.today()

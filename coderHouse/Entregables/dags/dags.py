@@ -34,7 +34,7 @@ with DAG(
         task_id='alerta_min',
         python_callable= alerta.alertaMinima,
     )
-     task5= PythonOperator(
+    task5= PythonOperator(
         task_id='alerta_max',
         python_callable= alerta.alertaMaxima,
     )
