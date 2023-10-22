@@ -25,7 +25,7 @@ def directorios():
 def extract_api():
     
     #api_key = os.environ.get("APY_KEY")
-    api_key = Variable.get("SECRET_API_KEY")
+    api_key= Variable.get("SECRET_API_KEY")
     lenguaje= "es"
     response=[]
     fecha_actual= datetime.today()
@@ -41,6 +41,7 @@ def extract_api():
     file_output = os.path.join(directorios(), f'extraccion_{fecha_actual.strftime("%Y%m%d")}.csv')
     df.to_csv(file_output, index=False)
     print("extraccion realizada")
+    print(df)
 
 
 #CONVIERTO LOS GRADOS A CELCIUS
