@@ -57,10 +57,10 @@ def AlertaTemperatura(valor,asunto):
         ciudad = fila['nombre']
         temperatura = fila[valor]
 
-        if (valor =='temp_min' and temperatura <= 7 and ciudades.get(ciudad, False)):
+        if (valor =='temp_min' and temperatura <= 0 and ciudades.get(ciudad, False)):
             alertas_min.append(f"Alerta: {ciudad} tiene una temperatura minima de {temperatura}°C.")
         
-        if  (valor =='temp_max' and temperatura>= 10 and ciudades.get(ciudad, False)):
+        if  (valor =='temp_max' and temperatura>= 45 and ciudades.get(ciudad, False)):
              alertas_max.append(f"Alerta: {ciudad} tiene una temperatura maxima de {temperatura}°C.")
         
     if(alertas_min):
